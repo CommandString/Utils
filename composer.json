@@ -1,0 +1,11 @@
+{
+    "name": "commandstring/utils",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "CommandString\\Utils\\": "src/"
+        }
+    },
+    "require": {}
+}
