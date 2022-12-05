@@ -13,7 +13,7 @@ class GeneratorUtils {
             throw new InvalidArgumentException("The character array must have two items!");
         }
 
-        for ($i = 0; $i <= $length; $i++) {
+        for ($i = 0; $i < $length; $i++) {
             $id .= $characters[rand(0, count($characters)-1)];
         }
 
