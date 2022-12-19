@@ -10,13 +10,27 @@ class ArrayUtils {
         $toStdClass = function (array $array, callable $toStdClass) {
             $stdClass = new stdClass();
 
-            foreach ($array as $key => $value) {
-                if (is_array($value)) {
-                    $value = $toStdClass($value, $toStdClass);
-                }
+            $toStdClass = function (\Closure $toStdClass, array $array, array $levels = []) use ($stdClass) {
+                foreach ($array as $key => $value) {
+                    if (is_array($value)) {
+                        $newLevels = array_merge($levels, [$key]);
+                        $toStdClass($toStdClass, $value, $newLevels);
+                        continue;
+                    }
 
-                $stdClass->$key = $value;
-            }
+                    $level = &$stdClass;
+                    foreach ($levels as $levelName) {
+                        if (!isset($level->$levelName)) {
+                            $level->$levelName = new stdClass;
+                        }
+
+                        $level = &$level->$levelName;
+                    }
+                    $level->$key = $value;
+                }
+            };
+
+            $toStdClass($toStdClass, $array);
 
             return $stdClass;
         };
