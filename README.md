@@ -49,6 +49,19 @@ object(stdClass)#2 (2) {
 */
 ```
 
+### randomize(array $array): array
+
+randomizes the given array
+
+```php
+$characters = str_split("Command_String");
+$randomized_characters = ArrayUtils::randomize($characters);
+
+foreach ($randomized_characters as $character) {
+    echo $character;
+}
+```
+
 # StringUtils
 
 ## getBetween(string $start, string $end, string $string, bool $include_start_end_with_response = false): string

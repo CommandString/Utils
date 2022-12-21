@@ -24,6 +24,29 @@ class ArrayUtils {
         return $toStdClass($array, $toStdClass);
     }
     
+    public static function randomize(array $array): array
+    {
+        $keys = array_keys($array);
+        $randomized_keys = [];
+        for ($i = 0; $i < count($keys); $i++) {
+            $random_key = $keys[mt_rand(0, count($keys)-1)];
+
+            if (in_array($random_key, $randomized_keys)) {
+                $i--;
+                continue;
+            }
+
+            $randomized_keys[] = $random_key;
+        }
+
+        $randomized_array = [];
+        foreach ($randomized_keys as $key) {
+            $randomized_array[] = $array[$key];
+        }
+
+        return $randomized_array;
+    }
+
     public static function trimValues(array $array, string $characters = " \n\r\t\v\x00"): array
     {
         foreach ($array as $key => $value) {
