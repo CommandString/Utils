@@ -117,3 +117,17 @@ You can also supply characters for the generator to use
 ```php
 echo GeneratorUtils::uuid(10, [1, 0]); // output: 11110100100
 ```
+
+# FileSystemUtils 
+
+## getAllFiles(string $directory, bool $recursive = false): array
+
+Get all files in a directory, if the second parameter is true then files in subdirectories will be included in the returned array
+
+## getAllSubDirectories(string $directory, bool $recursive = false): array
+
+Get all subdirectories in a directory and if recursive is true all subdirectories of the subdirectories will be included
+
+## getAllFilesWithExtensions(string $directory, array $extensionsToFind, bool $recursive = false): array
+
+Get all files in a directory with one of the supplied extensions. If the third parameter is true then the directories' subdirectories will be searched as well.
