@@ -5,34 +5,78 @@ namespace CommandString\Utils;
 use LogicException;
 
 class FileSystemUtils {
-    public static function getAllInDirectory(string $directory, bool $recursive = false): array
+    public static function getAllFiles(string $directory, bool $recursive = false): array
     {
-        $return = [];
-
         $directory = realpath($directory);
     
         if (!$directory) {
             throw new LogicException("The directory provided does not exist");
         }
 
-        foreach (scandir($directory) as $file) {
-            $file_path = "$directory/$file";
+        $files = [];
 
+        foreach (scandir($directory) as $file) {
             if ($file == "." || $file == "..") {
                 continue;
             }
 
-            if ($recursive) {
-                if (is_dir($file_path)) {
-                    $return[$file_path] = self::getAllInDirectory($file_path, true);
-                } else {
-                    $return[] = $file_path;
+            $file_path = "$directory/$file";
+
+            if (is_dir($file_path)) {
+                if ($recursive) {
+                    $files = array_merge($files, self::getAllFiles($file_path, true));
                 }
-            } else {
-                $return[] = $file_path;
+
+                continue;
+            }
+
+            $files[] = $file_path;
+        }
+
+        return $files;
+    }
+
+    public static function getAllSubDirectories(string $directory, bool $recursive = false): array
+    {
+        $directory = realpath($directory);
+
+        if (!$directory) {
+            throw new LogicException("The directory provided does not exist");
+        }
+
+        $directories = [];
+
+        foreach (scandir($directory) as $file) {
+            if ($file == "." || $file == "..") {
+                continue;
+            }
+        
+            $file_path = "$directory/$file";
+
+            if (is_dir($file_path)) {
+                if ($recursive) {
+                    $directories = array_merge($directories, self::getAllSubDirectories($file_path, true));
+                }
+
+                $directories[] = $file_path;
             }
         }
 
-        return $return;
+        return $directories;
+    }
+
+    public static function getAllFilesWithExtensions(string $directory, array $extensionsToFind, bool $recursive = false): array
+    {
+        $files = [];
+
+        foreach (self::getAllFiles($directory, $recursive) as $file) {
+            $file_extension = str_replace(".", "", strchr($file, "."));
+
+            if (in_array($file_extension, $extensionsToFind)) {
+                $files[] = $file;
+            }            
+        }
+
+        return $files;
     }
 }
