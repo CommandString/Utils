@@ -131,3 +131,13 @@ Get all subdirectories in a directory and if recursive is true all subdirectorie
 ## getAllFilesWithExtensions(string $directory, array $extensionsToFind, bool $recursive = false): array
 
 Get all files in a directory with one of the supplied extensions. If the third parameter is true then the directories' subdirectories will be searched as well.
+
+# ColorUtils
+
+## RGBAtoHEX(int $red, int $blue, int $green, ?int $alpha = null): string
+
+Converts a RGBA color code to a HEX color code
+
+## HEXtoRGBA(string $hex): array
+
+Converts a HEX color code to a RGBA color code.
