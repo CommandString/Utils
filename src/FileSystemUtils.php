@@ -2,6 +2,7 @@
 
 namespace CommandString\Utils;
 
+use CommandString\Utils\Enums\Size;
 use LogicException;
 
 class FileSystemUtils {
