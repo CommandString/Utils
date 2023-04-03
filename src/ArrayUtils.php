@@ -49,14 +49,14 @@ class ArrayUtils {
 
     public static function trimValues(array $array, string $characters = " \n\r\t\v\x00"): array
     {
-        foreach ($array as $key => $value) {
+        foreach ($array as &$value) {
             if (is_array($value)) {
                 $value = self::trimValues($array);   
             } else {
                 $value = trim($value, $characters);
             }
         }
-        
+
         return $array;
     }
 
