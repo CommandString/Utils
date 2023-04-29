@@ -8,14 +8,6 @@ namespace CommandString\Utils;
  */
 class ColourUtility {
   
-  /**
-   * The function converts a hexadecimal colour code to its corresponding RGB values.
-   * 
-   * @param string hex The "hex" parameter is a string representing a hexadecimal colour code.
-   * 
-   * @return array an array containing the RGB values of a given hexadecimal colour code. The array
-   * contains three elements, representing the red, green, and blue values respectively.
-   */
   public static function hexToRgb(string $hex):array {
     $hex = str_replace("#", "", $hex);
     if(strlen($hex) == 3) {
