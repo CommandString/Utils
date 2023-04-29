@@ -3,14 +3,8 @@
 namespace CommandString\Utils;
 
 /**
- * ColourUtility is a PHP class that provides a set of utility functions for working with colours.
- * 
- * @method static array hexToRgb(string $hex)
- * @method static string rgbToHex(int $r, int $g, int $b, $withPrefix = true)
- * @method static int getBrightness(string $colour)
- * @method static bool isDark(string $colour)
- * @method static string getContrastColour(string $colour)
- * @method static string getComplementaryColour(string $colour)
+ * ColorUtils is a PHP class that provides a set of utility functions for working with colours.
+ *
  */
 class ColourUtility {
   
