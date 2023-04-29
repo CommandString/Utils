@@ -6,7 +6,7 @@ namespace CommandString\Utils;
  * ColorUtils is a PHP class that provides a set of utility functions for working with colours.
  *
  */
-class ColourUtility {
+class ColorUtils {
   
   public static function hexToRgb(string $hex):array {
     $hex = str_replace("#", "", $hex);
