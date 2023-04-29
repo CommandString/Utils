@@ -114,7 +114,7 @@ class ColorUtils {
     $r = 255 - $rgb[0];
     $g = 255 - $rgb[1];
     $b = 255 - $rgb[2];
-    return $hex ? self::rgbToHex($r, $g, $b) : array($r, $g, $b);
+    return $hex ? self::rgbToHex($r, $g, $b) : [$r, $g, $b];
   } 
 }
 
