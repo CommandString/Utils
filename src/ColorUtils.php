@@ -35,28 +35,28 @@ class ColorUtils {
     return $withPrefix ? "#{$hex}" : $hex;
   }
   
-  public static function getBrightness(string $colour, bool $round = false): float|int 
+  public static function getBrightness(string $color, bool $round = false): float|int
   {
-    $rgb = self::hexToRgb($colour);
+    $rgb = self::hexToRgb($color);
     $luminance = (($rgb[0] * 299) + ($rgb[1] * 587) + ($rgb[2] * 114)) / 1000;
     return $round ? round($luminance) : $luminance;
   }
   
   
-  public static function isDark(string $colour): bool 
+  public static function isDark(string $color): bool
   {
-    $brightness = self::getBrightness($colour);
+    $brightness = self::getBrightness($color);
     return ($brightness < 128);
   }
 
-  public static function getContrastColour(string $colour): string 
+  public static function getContrastColor(string $color): string
   {
-    return self::isDark($colour) ? "#FFFFFF" : "#000000";
+    return self::isDark($color) ? "#FFFFFF" : "#000000";
   }
 
-  public static function getComplementaryColour($colour, $hex = true): string|array 
+  public static function getComplementaryColor($color, $hex = true): string|array
   {
-    $rgb = self::hexToRgb($colour);
+    $rgb = self::hexToRgb($color);
     $r = 255 - $rgb[0];
     $g = 255 - $rgb[1];
     $b = 255 - $rgb[2];
