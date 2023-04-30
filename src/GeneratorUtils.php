@@ -13,14 +13,19 @@ class GeneratorUtils {
 
     public static function randomString(int $length = 16, ?array $characters = null): string
     {
-        if (is_null($characters)) 
-            $characters = array_merge(range('a', 'z'), range('A', 'Z'));
+        if (is_null($characters)) {
+            $characters = array_merge(
+                range('a', 'z'),
+                range('A', 'Z'),
+            );
+        }
 
         $charactersLength = count($characters) - 1;
         $string = '';
 
-        for ($i = 0; $i < $length; $i++) 
+        for ($i = 0; $i < $length; $i++) {
             $string .= $characters[random_int(0, $charactersLength)];
+        }
 
         return $string;
     }
