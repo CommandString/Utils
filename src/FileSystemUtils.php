@@ -21,7 +21,7 @@ class FileSystemUtils {
                 continue;
             }
 
-            $file_path = "$directory/$file";
+            $file_path = "$directory" . DIRECTORY_SEPARATOR ."$file";
 
             if (is_dir($file_path)) {
                 if ($recursive) {
@@ -52,7 +52,7 @@ class FileSystemUtils {
                 continue;
             }
         
-            $file_path = "$directory/$file";
+            $file_path = "$directory" . DIRECTORY_SEPARATOR . "$file";
 
             if (is_dir($file_path)) {
                 if ($recursive) {
