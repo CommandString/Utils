@@ -4,19 +4,25 @@ namespace CommandString\Utils;
 use InvalidArgumentException;
 
 class GeneratorUtils {
-    public static function uuid(int $length = 16, ?array $characters = null): string
+    public static function uuid(int $length = 16): string
     {
-        $characters = $characters ?? array_merge(range("A", "Z"), range("a", "z"), range(0, 9));
-        $id = "";
+        $salt = random_bytes($length);
+        $time = microtime(true);
+        $hash = hash('sha256', $salt . $time);
+        return $hash;
+    }
 
-        if (count($characters) < 2) {
-            throw new InvalidArgumentException("The character array must have two items!");
-        }
+    public static function randomString(int $length = 16, ?array $characters = null): string
+    {
+        if (is_null($characters)) 
+            $characters = array_merge(range('a', 'z'), range('A', 'Z'));
 
-        for ($i = 0; $i < $length; $i++) {
-            $id .= $characters[rand(0, count($characters)-1)];
-        }
+        $charactersLength = count($characters) - 1;
+        $string = '';
 
-        return $id;
+        for ($i = 0; $i < $length; $i++) 
+            $string .= $characters[random_int(0, $charactersLength)];
+
+        return $string;
     }
 }
