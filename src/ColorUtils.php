@@ -3,7 +3,6 @@
 namespace CommandString\Utils;
 
 class ColorUtils {
-  
   public static function hexToRgb(string $hex): array 
   {
     $hex = str_replace("#", "", $hex);
