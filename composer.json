@@ -4,8 +4,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "CommandString\\Utils\\": "src/"
+            "CommandString\\Utils\\": "src/",
+            "CommandString\\Utils\\Tests\\": "tests/"
         }
     },
-    "require": {}
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpunit/phpunit": "^10"
+    }
 }
