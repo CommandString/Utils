@@ -36,7 +36,7 @@ final class ArrayUtilsTest extends TestCase
                 $this->fail("Converted array contains an array instead of stdClass");
             }
 
-            $this->assertEquals($stdClass->$key, $convertedArray->$key);
+            $this->assertEquals($stdClass->$key, $convertedArray->$key, "Array was not converted to stdClass");
         }
     }
 
@@ -61,7 +61,7 @@ final class ArrayUtilsTest extends TestCase
         $trimmedArray = ArrayUtils::trimValues($array);
 
         foreach (array_keys($manuallyTrimmedArray) as $key) {
-            $this->assertEquals($manuallyTrimmedArray[$key], $trimmedArray[$key]);
+            $this->assertEquals($manuallyTrimmedArray[$key], $trimmedArray[$key], "Array was not trimmed");
         }
     }
 
@@ -86,7 +86,7 @@ final class ArrayUtilsTest extends TestCase
         $trimmedArray = ArrayUtils::trimValues($array, ':;');
 
         foreach (array_keys($manuallyTrimmedArray) as $key) {
-            $this->assertEquals($manuallyTrimmedArray[$key], $trimmedArray[$key]);
+            $this->assertEquals($manuallyTrimmedArray[$key], $trimmedArray[$key], "Array was not trimmed with custom characters");
         }
     }
 
@@ -102,7 +102,7 @@ final class ArrayUtilsTest extends TestCase
 
         $lastItem = ArrayUtils::getLastItem($array);
 
-        $this->assertEquals($array['country'], $lastItem);
+        $this->assertEquals($array['country'], $lastItem, "Last item of array was not returned from associative array");
     }
 
     public function testArrayGettingLastItemOfArray(): void
@@ -117,7 +117,7 @@ final class ArrayUtilsTest extends TestCase
 
         $lastItem = ArrayUtils::getLastItem($array);
 
-        $this->assertEquals($array[4], $lastItem);
+        $this->assertEquals($array[4], $lastItem, "Last item of array was not returned");
     }
 
     public function testArrayGettingRandomized(): void
@@ -132,6 +132,6 @@ final class ArrayUtilsTest extends TestCase
 
         $randomizedArray = ArrayUtils::randomize($array);
 
-        $this->assertNotEquals($array, $randomizedArray);
+        $this->assertNotEquals($array, $randomizedArray, "Array was not randomized");
     }
 }
