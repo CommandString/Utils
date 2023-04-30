@@ -19,7 +19,6 @@ class ColorUtils
         return [$r, $g, $b];
     }
 
-
     public static function rgbToHex(int $r, int $g, int $b, $withPrefix = true): string
     {
         $r = dechex($r);
