@@ -1,5 +1,6 @@
 {
     "name": "commandstring/utils",
+    "description": "A collection of useful PHP utilities",
     "type": "library",
     "license": "MIT",
     "autoload": {
