@@ -31,7 +31,6 @@ final class ArrayUtilsTest extends TestCase
 
         $convertedArray = ArrayUtils::toStdClass($array);
 
-        // loop over all items of the stdClass and make sure the types and values match the stdClass
         foreach ($stdClass as $key => $value) {
             if (is_array($convertedArray->$key)) {
                 $this->fail("Converted array contains an array instead of stdClass");
