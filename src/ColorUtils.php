@@ -32,10 +32,6 @@ class ColorUtils {
 
     $hex = $r . $g . $b;
 
-    if ($withPrefix) {
-      $hex = "#" . $hex;
-    }
-
     return $withPrefix ? "#{$hex}" : $hex;
   }
   
