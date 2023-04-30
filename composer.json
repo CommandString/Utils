@@ -7,5 +7,6 @@
             "CommandString\\Utils\\": "src/"
         }
     },
-    "require": {}
+    "require": {},
+    "description": "A collection of useful utility functions."
 }

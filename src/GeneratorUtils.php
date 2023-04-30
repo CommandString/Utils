@@ -1,7 +1,6 @@
 <?php
 
 namespace CommandString\Utils;
-use InvalidArgumentException;
 
 class GeneratorUtils {
     public static function uuid(int $length = 16): string
