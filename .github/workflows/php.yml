@@ -33,4 +33,4 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run Tests
-      run: composer run tests
+      run: composer phpunit
