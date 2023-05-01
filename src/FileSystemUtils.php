@@ -2,18 +2,24 @@
 
 namespace CommandString\Utils;
 
-use CommandString\Utils\Enums\Size;
 use LogicException;
 
 class FileSystemUtils
 {
-    public static function getAllFiles(string $directory, bool $recursive = false): array
+    protected static function checkDirectoriesExistence(string $directory): void
     {
         $directory = realpath($directory);
 
         if (!$directory) {
             throw new LogicException("The directory provided does not exist");
         }
+    }
+
+    public static function getAllFiles(string $directory, bool $recursive = false): array
+    {
+        self::checkDirectoriesExistence($directory);
+
+        $directory = realpath($directory);
 
         $files = [];
 
@@ -40,11 +46,9 @@ class FileSystemUtils
 
     public static function getAllSubDirectories(string $directory, bool $recursive = false): array
     {
-        $directory = realpath($directory);
+        self::checkDirectoriesExistence($directory);
 
-        if (!$directory) {
-            throw new LogicException("The directory provided does not exist");
-        }
+        $directory = realpath($directory);
 
         $directories = [];
 
