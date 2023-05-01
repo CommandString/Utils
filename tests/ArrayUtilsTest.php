@@ -64,6 +64,33 @@ final class ArrayUtilsTest extends TestCase
         }
     }
 
+    public function testTrimmingNestedArrayValues(): void
+    {
+        $array = [
+            'name' => '   John Doe   ',
+            'age' => 32,
+            'address' => [
+                'street' => ' 51 Middle st.    ',
+                'city' => '  Nowhere   ',
+                'country' => '     Neverland '
+            ]
+        ];
+
+        $manuallyTrimmedArray = [
+            'name' => 'John Doe',
+            'age' => 32,
+            'address' => [
+                'street' => '51 Middle st.',
+                'city' => 'Nowhere',
+                'country' => 'Neverland'
+            ]
+        ];
+
+        $trimmedArray = ArrayUtils::trimValues($array);
+
+        $this->assertEquals($manuallyTrimmedArray, $trimmedArray, "Nested array was not trimmed");
+    }
+
     public function testArrayTrimsValuesWithCustomCharacters(): void
     {
         $array = [
