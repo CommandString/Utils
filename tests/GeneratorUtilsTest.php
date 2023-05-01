@@ -5,7 +5,8 @@ namespace Tests\CommandString\Utils;
 use CommandString\Utils\GeneratorUtils;
 use PHPUnit\Framework\TestCase;
 
-class GeneratorUtilsTest extends TestCase {
+class GeneratorUtilsTest extends TestCase
+{
     public function testBasicUuid(): void
     {
         $uuid = GeneratorUtils::uuid();
