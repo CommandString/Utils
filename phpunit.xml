@@ -9,6 +9,7 @@
             <file>tests/ColorUtilsTest.php</file>
             <file>tests/FileSystemUtilsTest.php</file>
             <file>tests/GeneratorUtilsTest.php</file>
+            <file>tests/StringUtilsTest.php</file>
         </testsuite>
     </testsuites>
     <coverage />
