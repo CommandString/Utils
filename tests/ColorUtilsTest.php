@@ -5,8 +5,7 @@ namespace Tests\CommandString\Utils;
 use CommandString\Utils\ColorUtils;
 use PHPUnit\Framework\TestCase;
 
-class ColorUtilsTest extends TestCase
-{
+class ColorUtilsTest extends TestCase {
     public function testHexConvertsToRgb(): void
     {
         $hex = "#FFFFFF";

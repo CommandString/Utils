@@ -21,7 +21,6 @@ final class ArrayUtilsTest extends TestCase
         ];
 
         $stdClass = new stdClass();
-
         $stdClass->name = 'John Doe';
         $stdClass->age = 32;
         $stdClass->address = new stdClass();
