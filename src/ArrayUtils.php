@@ -52,7 +52,7 @@ class ArrayUtils
     {
         foreach ($array as &$value) {
             if (is_array($value)) {
-                $value = self::trimValues($array);
+                $value = self::trimValues($value);
             } else {
                 $value = trim($value, $characters);
             }
