@@ -129,4 +129,10 @@ class FileSystemUtilsTest extends TestCase
             self::TEST_DIRECTORY . DIRECTORY_SEPARATOR . "world.txt"
         ];
     }
+
+    public function testExceptionWhenSupplyingNonExistentDirectory(): void
+    {
+        $this->expectException(\LogicException::class);
+        FileSystemUtils::getAllFiles("non-existent-directory");
+    }
 }
