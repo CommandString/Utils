@@ -1,9 +1,11 @@
 <?php
 
 namespace CommandString\Utils;
+
 use InvalidArgumentException;
 
-class GeneratorUtils {
+class GeneratorUtils
+{
     public static function uuid(int $length = 16, ?array $characters = null): string
     {
         $characters = $characters ?? array_merge(range("A", "Z"), range("a", "z"), range(0, 9));
@@ -14,7 +16,7 @@ class GeneratorUtils {
         }
 
         for ($i = 0; $i < $length; $i++) {
-            $id .= $characters[rand(0, count($characters)-1)];
+            $id .= $characters[rand(0, count($characters) - 1)];
         }
 
         return $id;

@@ -4,7 +4,8 @@ namespace CommandString\Utils;
 
 use stdClass;
 
-class ArrayUtils {
+class ArrayUtils
+{
     public static function toStdClass(array $array): stdClass
     {
         $toStdClass = function (array $array, callable $toStdClass) {
@@ -23,13 +24,13 @@ class ArrayUtils {
 
         return $toStdClass($array, $toStdClass);
     }
-    
+
     public static function randomize(array $array): array
     {
         $keys = array_keys($array);
         $randomized_keys = [];
         for ($i = 0; $i < count($keys); $i++) {
-            $random_key = $keys[mt_rand(0, count($keys)-1)];
+            $random_key = $keys[mt_rand(0, count($keys) - 1)];
 
             if (in_array($random_key, $randomized_keys)) {
                 $i--;
@@ -51,7 +52,7 @@ class ArrayUtils {
     {
         foreach ($array as &$value) {
             if (is_array($value)) {
-                $value = self::trimValues($array);   
+                $value = self::trimValues($array);
             } else {
                 $value = trim($value, $characters);
             }
@@ -62,6 +63,6 @@ class ArrayUtils {
 
     public static function getLastItem(array $array): mixed
     {
-        return $array[array_keys($array)[count($array)-1]];
+        return $array[array_keys($array)[count($array) - 1]];
     }
 }

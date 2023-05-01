@@ -1,6 +1,6 @@
 <?php
 
-namespace CommandString\Utils\Tests;
+namespace Tests\CommandString\Utils;
 
 use CommandString\Utils\ArrayUtils;
 use PHPUnit\Framework\TestCase;
@@ -20,11 +20,11 @@ final class ArrayUtilsTest extends TestCase
             ],
         ];
 
-        $stdClass = new stdClass;
+        $stdClass = new stdClass();
 
         $stdClass->name = 'John Doe';
         $stdClass->age = 32;
-        $stdClass->address = new stdClass;
+        $stdClass->address = new stdClass();
         $stdClass->address->street = '51 Middle st.';
         $stdClass->address->city = 'Nowhere';
         $stdClass->address->country = 'Neverland';
@@ -86,7 +86,11 @@ final class ArrayUtilsTest extends TestCase
         $trimmedArray = ArrayUtils::trimValues($array, ':;');
 
         foreach (array_keys($manuallyTrimmedArray) as $key) {
-            $this->assertEquals($manuallyTrimmedArray[$key], $trimmedArray[$key], "Array was not trimmed with custom characters");
+            $this->assertEquals(
+                $manuallyTrimmedArray[$key],
+                $trimmedArray[$key],
+                "Array was not trimmed with custom characters"
+            );
         }
     }
 

@@ -5,11 +5,12 @@ namespace CommandString\Utils;
 use CommandString\Utils\Enums\Size;
 use LogicException;
 
-class FileSystemUtils {
+class FileSystemUtils
+{
     public static function getAllFiles(string $directory, bool $recursive = false): array
     {
         $directory = realpath($directory);
-    
+
         if (!$directory) {
             throw new LogicException("The directory provided does not exist");
         }
@@ -21,7 +22,7 @@ class FileSystemUtils {
                 continue;
             }
 
-            $file_path = "$directory" . DIRECTORY_SEPARATOR ."$file";
+            $file_path = "$directory" . DIRECTORY_SEPARATOR . "$file";
 
             if (is_dir($file_path)) {
                 if ($recursive) {
@@ -51,7 +52,7 @@ class FileSystemUtils {
             if ($file == "." || $file == "..") {
                 continue;
             }
-        
+
             $file_path = "$directory" . DIRECTORY_SEPARATOR . "$file";
 
             if (is_dir($file_path)) {
@@ -66,8 +67,11 @@ class FileSystemUtils {
         return $directories;
     }
 
-    public static function getAllFilesWithExtensions(string $directory, array $extensionsToFind, bool $recursive = false): array
-    {
+    public static function getAllFilesWithExtensions(
+        string $directory,
+        array $extensionsToFind,
+        bool $recursive = false
+    ): array {
         $files = [];
 
         foreach (self::getAllFiles($directory, $recursive) as $file) {
@@ -75,7 +79,7 @@ class FileSystemUtils {
 
             if (in_array($file_extension, $extensionsToFind)) {
                 $files[] = $file;
-            }            
+            }
         }
 
         return $files;

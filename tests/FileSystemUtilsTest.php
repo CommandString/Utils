@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\CommandString\Utils;
+
 use CommandString\Utils\FileSystemUtils;
 use PHPUnit\Framework\TestCase;
 
@@ -71,7 +73,11 @@ class FileSystemUtilsTest extends TestCase
 
         foreach ($testDirectoryStructure as $file) {
             if (!str_ends_with($file, ".txt") && !str_ends_with($file, ".json")) {
-                $this->assertNotContains($file, $retrievedStructure, "Failed to get all files with extension recursively");
+                $this->assertNotContains(
+                    $file,
+                    $retrievedStructure,
+                    "Failed to get all files with extension recursively"
+                );
                 continue;
             }
 
@@ -86,7 +92,8 @@ class FileSystemUtilsTest extends TestCase
             self::TEST_DIRECTORY . DIRECTORY_SEPARATOR . "world.txt",
             self::TEST_DIRECTORY . DIRECTORY_SEPARATOR . "Textures" . DIRECTORY_SEPARATOR . "contacts.json",
             self::TEST_DIRECTORY . DIRECTORY_SEPARATOR . "Scripts" . DIRECTORY_SEPARATOR . "main.py",
-            self::TEST_DIRECTORY . DIRECTORY_SEPARATOR . "Scripts" . DIRECTORY_SEPARATOR . "Tests" . DIRECTORY_SEPARATOR . "test.py"
+            self::TEST_DIRECTORY . DIRECTORY_SEPARATOR . "Scripts" .
+                DIRECTORY_SEPARATOR . "Tests" . DIRECTORY_SEPARATOR . "test.py"
         ];
     }
 
