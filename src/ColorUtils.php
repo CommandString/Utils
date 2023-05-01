@@ -62,5 +62,3 @@ class ColorUtils
         return $hex ? self::rgbToHex($r, $g, $b) : [$r, $g, $b];
     }
 }
-
-?>

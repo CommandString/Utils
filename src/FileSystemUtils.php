@@ -2,17 +2,24 @@
 
 namespace CommandString\Utils;
 
-use CommandString\Utils\Enums\Size;
 use LogicException;
 
-class FileSystemUtils {
-    public static function getAllFiles(string $directory, bool $recursive = false): array
+class FileSystemUtils
+{
+    protected static function checkDirectoriesExistence(string $directory): void
     {
         $directory = realpath($directory);
-    
+
         if (!$directory) {
             throw new LogicException("The directory provided does not exist");
         }
+    }
+
+    public static function getAllFiles(string $directory, bool $recursive = false): array
+    {
+        self::checkDirectoriesExistence($directory);
+
+        $directory = realpath($directory);
 
         $files = [];
 
@@ -21,7 +28,7 @@ class FileSystemUtils {
                 continue;
             }
 
-            $file_path = "$directory" . DIRECTORY_SEPARATOR ."$file";
+            $file_path = "$directory" . DIRECTORY_SEPARATOR . "$file";
 
             if (is_dir($file_path)) {
                 if ($recursive) {
@@ -39,11 +46,9 @@ class FileSystemUtils {
 
     public static function getAllSubDirectories(string $directory, bool $recursive = false): array
     {
-        $directory = realpath($directory);
+        self::checkDirectoriesExistence($directory);
 
-        if (!$directory) {
-            throw new LogicException("The directory provided does not exist");
-        }
+        $directory = realpath($directory);
 
         $directories = [];
 
@@ -51,7 +56,7 @@ class FileSystemUtils {
             if ($file == "." || $file == "..") {
                 continue;
             }
-        
+
             $file_path = "$directory" . DIRECTORY_SEPARATOR . "$file";
 
             if (is_dir($file_path)) {
@@ -66,8 +71,11 @@ class FileSystemUtils {
         return $directories;
     }
 
-    public static function getAllFilesWithExtensions(string $directory, array $extensionsToFind, bool $recursive = false): array
-    {
+    public static function getAllFilesWithExtensions(
+        string $directory,
+        array $extensionsToFind,
+        bool $recursive = false
+    ): array {
         $files = [];
 
         foreach (self::getAllFiles($directory, $recursive) as $file) {
@@ -75,7 +83,7 @@ class FileSystemUtils {
 
             if (in_array($file_extension, $extensionsToFind)) {
                 $files[] = $file;
-            }            
+            }
         }
 
         return $files;

@@ -1,11 +1,12 @@
 <?php
 
-namespace CommandString\Utils\Tests;
+namespace Tests\CommandString\Utils;
 
 use CommandString\Utils\ColorUtils;
 use PHPUnit\Framework\TestCase;
 
-class ColorUtilsTest extends TestCase {
+class ColorUtilsTest extends TestCase
+{
     public function testHexConvertsToRgb(): void
     {
         $hex = "#FFFFFF";
@@ -39,18 +40,18 @@ class ColorUtilsTest extends TestCase {
         $this->assertTrue($isDark, "Color is dark");
     }
 
-    public function getContrastColor(): void
+    public function testGettingContrastColor(): void
     {
-        $color = "#8800FF";
+        $color = "#FFFFFF";
         $contrastColor = ColorUtils::getContrastColor($color);
         $this->assertEquals("#000000", $contrastColor, "Contrast color is not black");
 
         $color = "#0088FF";
         $contrastColor = ColorUtils::getContrastColor($color);
-        $this->assertEquals("#ffffff", $contrastColor, "Contrast color is not white");
+        $this->assertEquals("#FFFFFF", $contrastColor, "Contrast color is not white");
     }
 
-    public function getComplimentaryColor(): void
+    public function testGettingComplimentaryColor(): void
     {
         $color = "#8800FF";
         $complimentaryColor = ColorUtils::getComplementaryColor($color);

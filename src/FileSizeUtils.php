@@ -39,7 +39,7 @@ enum FileSizeUtils: string
                 return $from / 1e+24;
         }
     }
-    
+
     private static function toBytes(self $from_type, float $from_size): float
     {
         switch ($from_type) {
@@ -73,12 +73,12 @@ enum FileSizeUtils: string
     {
         $reduced = self::reduceFileSize($type, $size);
 
-        return number_format($reduced->size, $decimals)." ".self::getTypeAbbreviation($reduced->type);
+        return number_format($reduced->size, $decimals) . " " . self::getTypeAbbreviation($reduced->type);
     }
 
     public static function reduceFileSize(self $type, float $size): stdClass
     {
-        $result = new stdClass;
+        $result = new stdClass();
 
         $bytes = self::convertFileSize($type, self::BYTE, $size);
         $factor = floor((strlen($bytes) - 1) / 3);
