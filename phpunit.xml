@@ -8,6 +8,7 @@
             <file>tests/ArrayUtilsTest.php</file>
             <file>tests/ColorUtilsTest.php</file>
             <file>tests/FileSystemUtilsTest.php</file>
+            <file>tests/GeneratorUtilsTest.php</file>
         </testsuite>
     </testsuites>
     <coverage />
