@@ -24,4 +24,11 @@ class StringUtilsTest extends TestCase {
 
         StringUtils::getBetween("(", ")", $string);
     }
+
+    public function testGettingAllOccurrences() {
+        $string = 'abbabbbababaAb';
+
+        $this->assertEquals([0, 3, 7, 9, 11], StringUtils::getAllOccurrences($string, 'a'));
+        $this->assertEquals([0, 3, 7, 9, 11, 12], StringUtils::getAllOccurrences($string, 'a', false));
+    }
 }
