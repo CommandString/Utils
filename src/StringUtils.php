@@ -27,7 +27,8 @@ class StringUtils
         return substr($string, $startPos, ($endPos - $startPos) + 1);
     }
 
-    public static function getAllOccurrences(string $haystack, string $needle, bool $caseSensitive = true): array {
+    public static function getAllOccurrences(string $haystack, string $needle, bool $caseSensitive = true): array
+    {
         $offset = 0;
         $poses = [];
 

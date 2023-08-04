@@ -3,49 +3,44 @@
 namespace CommandString\Utils;
 
 use stdClass;
+use Stringable;
 
 class ArrayUtils
 {
     public static function toStdClass(array $array): stdClass
     {
-        $toStdClass = function (array $array, callable $toStdClass) {
-            $stdClass = new stdClass();
-
-            foreach ($array as $key => $value) {
-                if (is_array($value)) {
-                    $value = $toStdClass($value, $toStdClass);
-                }
-
-                $stdClass->$key = $value;
+        $object = (object) $array;
+        foreach ($object as &$value) {
+            if (is_array($value)) {
+                $value = static::toStdClass($value);
             }
+        }
+        unset($value);
 
-            return $stdClass;
-        };
-
-        return $toStdClass($array, $toStdClass);
+        return $object;
     }
 
-    public static function randomize(array $array): array
+    public static function randomize(array $array, bool $preserveKeys = false): array
     {
+        if (!$preserveKeys) {
+            shuffle($array);
+
+            return $array;
+        }
+
+
         $keys = array_keys($array);
-        $randomized_keys = [];
-        for ($i = 0; $i < count($keys); $i++) {
-            $random_key = $keys[mt_rand(0, count($keys) - 1)];
+        shuffle($keys);
 
-            if (in_array($random_key, $randomized_keys)) {
-                $i--;
-                continue;
-            }
+        return array_reduce(
+                $keys,
+                static function (array $accumulator, string|int $key) use ($array): array {
+                    $accumulator[$key] = $array[$key];
 
-            $randomized_keys[] = $random_key;
-        }
-
-        $randomized_array = [];
-        foreach ($randomized_keys as $key) {
-            $randomized_array[] = $array[$key];
-        }
-
-        return $randomized_array;
+                    return $accumulator;
+                },
+                []
+        );
     }
 
     public static function trimValues(array $array, string $characters = " \n\r\t\v\x00"): array
@@ -53,16 +48,17 @@ class ArrayUtils
         foreach ($array as &$value) {
             if (is_array($value)) {
                 $value = self::trimValues($value);
-            } else {
+            } elseif (is_scalar($value) || $value instanceof Stringable || method_exists($value, '__toString')) {
                 $value = trim($value, $characters);
             }
         }
+        unset($value);
 
         return $array;
     }
 
     public static function getLastItem(array $array): mixed
     {
-        return $array[array_keys($array)[count($array) - 1]];
+        return array_pop($array);
     }
 }

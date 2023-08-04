@@ -164,4 +164,20 @@ final class ArrayUtilsTest extends TestCase
 
         $this->assertNotEquals($array, $randomizedArray, "Array was not randomized");
     }
+
+    public function testArrayGettingRandomizedWithKeysPreserved(): void
+    {
+        $array = [
+                'John Doe',
+                32,
+                '51 Middle st.',
+                'Nowhere',
+                'Neverland'
+        ];
+
+        $randomizedArray = ArrayUtils::randomize($array, true);
+
+        $this->assertEquals($array, $randomizedArray, "Array was not randomized");
+        $this->assertNotSame($array, $randomizedArray);
+    }
 }
