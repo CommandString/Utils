@@ -3,18 +3,22 @@
     "description": "A collection of useful PHP utilities",
     "type": "library",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "CommandString\\Utils\\": "src/",
-            "Tests\\CommandString\\Utils\\": "tests/"
-        }
-    },
     "authors": [
         {
             "name": "Robert Snedeker",
             "email": "rsnedeker20@gmail.com.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "CommandString\\Utils\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\CommandString\\Utils\\": "tests/"
+        }
+    },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7",
         "phpunit/phpunit": "^10"
