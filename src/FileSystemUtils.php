@@ -2,90 +2,99 @@
 
 namespace CommandString\Utils;
 
+use CallbackFilterIterator;
+use DirectoryIterator;
+use FilesystemIterator;
+use Iterator;
 use LogicException;
+use RecursiveCallbackFilterIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 
 class FileSystemUtils
 {
-    protected static function checkDirectoriesExistence(string $directory): void
+    public static function getAllFiles(string $directory, bool $recursive = false): array
+    {
+        return static::traverseDirectory(
+                $directory,
+                $recursive,
+                static fn (SplFileInfo $info): bool => $info->isFile()
+        );
+    }
+
+    public static function getAllSubDirectories(string $directory, bool $recursive = false): array
+    {
+        return static::traverseDirectory(
+                $directory,
+                $recursive,
+                static fn(SplFileInfo $info): bool => $info->isDir()
+        );
+    }
+
+    protected static function ensureDirectory(string $directory): string
     {
         $directory = realpath($directory);
 
         if (!$directory) {
             throw new LogicException("The directory provided does not exist");
         }
-    }
 
-    public static function getAllFiles(string $directory, bool $recursive = false): array
-    {
-        self::checkDirectoriesExistence($directory);
-
-        $directory = realpath($directory);
-
-        $files = [];
-
-        foreach (scandir($directory) as $file) {
-            if ($file == "." || $file == "..") {
-                continue;
-            }
-
-            $file_path = "$directory" . DIRECTORY_SEPARATOR . "$file";
-
-            if (is_dir($file_path)) {
-                if ($recursive) {
-                    $files = array_merge($files, self::getAllFiles($file_path, true));
-                }
-
-                continue;
-            }
-
-            $files[] = $file_path;
-        }
-
-        return $files;
-    }
-
-    public static function getAllSubDirectories(string $directory, bool $recursive = false): array
-    {
-        self::checkDirectoriesExistence($directory);
-
-        $directory = realpath($directory);
-
-        $directories = [];
-
-        foreach (scandir($directory) as $file) {
-            if ($file == "." || $file == "..") {
-                continue;
-            }
-
-            $file_path = "$directory" . DIRECTORY_SEPARATOR . "$file";
-
-            if (is_dir($file_path)) {
-                if ($recursive) {
-                    $directories = array_merge($directories, self::getAllSubDirectories($file_path, true));
-                }
-
-                $directories[] = $file_path;
-            }
-        }
-
-        return $directories;
+        return $directory;
     }
 
     public static function getAllFilesWithExtensions(
         string $directory,
-        array $extensionsToFind,
-        bool $recursive = false
+        array  $extensions = [],
+        bool   $recursive = false
     ): array {
-        $files = [];
+        return static::traverseDirectory(
+                $directory,
+                $recursive,
+                static function (SplFileInfo $info) use ($extensions): bool {
+                    if (!$info->isFile()) {
+                        return false;
+                    }
 
-        foreach (self::getAllFiles($directory, $recursive) as $file) {
-            $file_extension = str_replace(".", "", strchr($file, "."));
+                    if (!empty($extensions)) {
+                        return in_array($info->getExtension(), $extensions, true);
+                    }
 
-            if (in_array($file_extension, $extensionsToFind)) {
-                $files[] = $file;
-            }
+                    return true;
+                }
+        );
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected static function traverseDirectory(string $directory, bool $recursive, callable $filter): array
+    {
+        $directory = static::ensureDirectory($directory);
+
+        $flags = FilesystemIterator::SKIP_DOTS | FilesystemIterator::CURRENT_AS_SELF;
+        if ($recursive) {
+            $iterator = new RecursiveIteratorIterator(
+                    new RecursiveCallbackFilterIterator(
+                            new RecursiveDirectoryIterator($directory, $flags),
+                            static fn(RecursiveDirectoryIterator $info): bool => $info->hasChildren() || $filter($info)
+                    ),
+                    RecursiveIteratorIterator::SELF_FIRST
+            );
+        } else {
+            $iterator = new CallbackFilterIterator(
+                    new FilesystemIterator($directory, $flags),
+                    $filter
+            );
         }
 
-        return $files;
+        $paths = [];
+
+        /** @var Iterator<string, SplFileInfo> $iterator */
+        foreach ($iterator as $info) {
+            $paths[] = $info->getRealPath();
+        }
+        return $paths;
     }
 }
