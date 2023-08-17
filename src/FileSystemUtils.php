@@ -18,18 +18,18 @@ class FileSystemUtils
     public static function getAllFiles(string $directory, bool $recursive = false): array
     {
         return static::traverseDirectory(
-                $directory,
-                $recursive,
-                static fn (SplFileInfo $info): bool => $info->isFile()
+            $directory,
+            $recursive,
+            static fn (SplFileInfo $info): bool => $info->isFile()
         );
     }
 
     public static function getAllSubDirectories(string $directory, bool $recursive = false): array
     {
         return static::traverseDirectory(
-                $directory,
-                $recursive,
-                static fn(SplFileInfo $info): bool => $info->isDir()
+            $directory,
+            $recursive,
+            static fn(SplFileInfo $info): bool => $info->isDir()
         );
     }
 
@@ -46,23 +46,23 @@ class FileSystemUtils
 
     public static function getAllFilesWithExtensions(
         string $directory,
-        array  $extensions = [],
-        bool   $recursive = false
+        array $extensions = [],
+        bool $recursive = false
     ): array {
         return static::traverseDirectory(
-                $directory,
-                $recursive,
-                static function (SplFileInfo $info) use ($extensions): bool {
-                    if (!$info->isFile()) {
-                        return false;
-                    }
+            $directory,
+            $recursive,
+            static function (SplFileInfo $info) use ($extensions): bool {
+                if (!$info->isFile()) {
+                    return false;
+                }
 
-                    if (!empty($extensions)) {
-                        return in_array($info->getExtension(), $extensions, true);
-                    }
+                if (!empty($extensions)) {
+                    return in_array($info->getExtension(), $extensions, true);
+                }
 
                     return true;
-                }
+            }
         );
     }
 
@@ -76,16 +76,16 @@ class FileSystemUtils
         $flags = FilesystemIterator::SKIP_DOTS | FilesystemIterator::CURRENT_AS_SELF;
         if ($recursive) {
             $iterator = new RecursiveIteratorIterator(
-                    new RecursiveCallbackFilterIterator(
-                            new RecursiveDirectoryIterator($directory, $flags),
-                            static fn(RecursiveDirectoryIterator $info): bool => $info->hasChildren() || $filter($info)
-                    ),
-                    RecursiveIteratorIterator::SELF_FIRST
+                new RecursiveCallbackFilterIterator(
+                    new RecursiveDirectoryIterator($directory, $flags),
+                    static fn(RecursiveDirectoryIterator $info): bool => $info->hasChildren() || $filter($info)
+                ),
+                RecursiveIteratorIterator::SELF_FIRST
             );
         } else {
             $iterator = new CallbackFilterIterator(
-                    new FilesystemIterator($directory, $flags),
-                    $filter
+                new FilesystemIterator($directory, $flags),
+                $filter
             );
         }
 

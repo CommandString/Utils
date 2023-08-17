@@ -33,13 +33,13 @@ class ArrayUtils
         shuffle($keys);
 
         return array_reduce(
-                $keys,
-                static function (array $accumulator, string|int $key) use ($array): array {
+            $keys,
+            static function (array $accumulator, string|int $key) use ($array): array {
                     $accumulator[$key] = $array[$key];
 
                     return $accumulator;
-                },
-                []
+            },
+            []
         );
     }
 
