@@ -23,7 +23,7 @@ class ColorUtils
 
         if ($length == 6) {
             return array_map(
-                static fn (string $part): int => hexdec($part),
+                hexdec(...),
                 str_split($hex, 2)
             );
         }
@@ -33,19 +33,13 @@ class ColorUtils
 
     public static function rgbToHex(int $r, int $g, int $b, $withPrefix = true): string
     {
-        $hex = array_map(
-            static fn (int $part): string => str_pad(
-                dechex($part),
-                2,
-                '0',
-                STR_PAD_LEFT
-            ),
-            [$r, $g, $b]
+        return sprintf(
+                '%s%02x%02x%02x',
+                $withPrefix ? '#' : '',
+                $r,
+                $g,
+                $b
         );
-
-        $hex = implode('', $hex);
-
-        return $withPrefix ? "#{$hex}" : $hex;
     }
 
     public static function getBrightness(string $color, bool $round = false): float|int
